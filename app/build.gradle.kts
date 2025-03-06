@@ -59,4 +59,7 @@ dependencies {
 
     // AdSDK
     implementation(libs.adsdk)
+
+    // Koin for Dependency Injection
+    implementation(libs.koin.android)
 }
