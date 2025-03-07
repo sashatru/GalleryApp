@@ -7,8 +7,10 @@ import androidx.activity.compose.setContent
 import com.example.adsdk.AdManager
 import com.example.galleryapp.utils.AppLaunchTracker
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : ComponentActivity() {
+    private val mainViewModel: MainViewModel by viewModel()
     private val adManager: AdManager by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,8 +20,6 @@ class MainActivity : ComponentActivity() {
         }
 
         // Show interstitial ad only on the second app launch
-        //if (AppLaunchTracker.shouldShowInterstitialAd(this)) {
-            adManager.showInterstitialAd()
-        //}
+        mainViewModel.checkAndShowInterstitialAd(this)
     }
 }
