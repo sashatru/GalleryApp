@@ -10,7 +10,7 @@ class AppLaunchTracker(context: Context) {
         private const val KEY_LAUNCH_COUNT = "launch_count"
     }
 
-    fun shouldShowInterstitialAd(): Boolean {
+    open fun shouldShowInterstitialAd(): Boolean {
         return prefs.getInt(KEY_LAUNCH_COUNT, 0) > 1
     }
 

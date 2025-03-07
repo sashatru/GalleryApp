@@ -63,4 +63,6 @@ dependencies {
     implementation(project(":AdSDK"))
     // Koin for Dependency Injection
     implementation(libs.koin.android)
+
+    implementation("io.coil-kt.coil3:coil-compose:3.1.0")
 }

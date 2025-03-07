@@ -1,6 +1,6 @@
 package com.example.galleryapp.presentation
 
-import GalleryScreen
+
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -28,7 +28,7 @@ class MainActivity : ComponentActivity() {
             GalleryAppTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     GalleryScreen(
-                        adManager,
+                        mainViewModel,
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
