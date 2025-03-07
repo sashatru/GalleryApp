@@ -1,6 +1,7 @@
 package com.example.galleryapp.presentation
 
 import android.app.Activity
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.adsdk.AdManager
@@ -13,29 +14,23 @@ import kotlinx.coroutines.launch
 
 class MainViewModel(
     private val adManager: AdManager,
-    private val appLaunchTracker: AppLaunchTracker,
-    private val showInterstitialAdUseCase: ShowInterstitialAdUseCase
+    private val appLaunchTracker: AppLaunchTracker
 ) : ViewModel() {
-    private val _interstitialAdState = MutableStateFlow<AdState>(AdState.Loading)
-    val interstitialAdState: StateFlow<AdState> = _interstitialAdState
 
-    /*
-        init {
-            loadInterstitialAd()
-        }
+    private val _shouldShowInterstitialAd = MutableStateFlow(false)
+    val shouldShowInterstitialAd: StateFlow<Boolean> = _shouldShowInterstitialAd
 
-        fun loadInterstitialAd() {
-            viewModelScope.launch {
-                adManager.loadInterstitialAd()
-            }
-        }
-    */
+    init {
+        checkInterstitialAdCondition()
+    }
 
-    fun checkAndShowInterstitialAd(activity: Activity) {
-        if (appLaunchTracker.shouldShowInterstitialAd()) {
-            viewModelScope.launch {
-                showInterstitialAdUseCase.execute(activity)
-            }
+    private fun checkInterstitialAdCondition() {
+        viewModelScope.launch {
+            _shouldShowInterstitialAd.value = appLaunchTracker.shouldShowInterstitialAd()
         }
+    }
+
+    fun adShown() {
+        _shouldShowInterstitialAd.value = false
     }
 }

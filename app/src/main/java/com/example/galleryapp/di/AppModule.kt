@@ -12,5 +12,5 @@ val appModule = module {
     single { AppLaunchTracker(androidContext()) }
     single { AdManager(androidContext()) }
     factory { ShowInterstitialAdUseCase(get()) }
-    viewModel { MainViewModel(get(), get(), get()) }
+    viewModel { MainViewModel(get(), get()) }
 }

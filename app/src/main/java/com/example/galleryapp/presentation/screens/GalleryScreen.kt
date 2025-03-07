@@ -16,7 +16,7 @@ import com.example.galleryapp.R
 import kotlinx.coroutines.flow.emptyFlow
 
 @Composable
-fun GalleryScreen(adManager: AdManager?) {
+fun GalleryScreen(adManager: AdManager?, modifier: Modifier = Modifier) {
     val nativeAdState by (adManager?.getNativeAdState() ?: emptyFlow()).collectAsState(initial = AdState.Loading)
 
     val imageList = listOf(

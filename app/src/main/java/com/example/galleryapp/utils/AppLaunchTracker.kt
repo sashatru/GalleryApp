@@ -11,8 +11,11 @@ class AppLaunchTracker(context: Context) {
     }
 
     fun shouldShowInterstitialAd(): Boolean {
+        return prefs.getInt(KEY_LAUNCH_COUNT, 0) > 1
+    }
+
+    fun incrementLaunchCount() {
         val launchCount = prefs.getInt(KEY_LAUNCH_COUNT, 0)
         prefs.edit().putInt(KEY_LAUNCH_COUNT, launchCount + 1).apply()
-        return launchCount >= 1
     }
 }
