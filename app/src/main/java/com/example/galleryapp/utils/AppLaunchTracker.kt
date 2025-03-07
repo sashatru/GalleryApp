@@ -2,7 +2,7 @@ package com.example.galleryapp.utils
 
 import android.content.Context
 
-class AppLaunchTracker(private val context: Context) {
+class AppLaunchTracker(context: Context) {
     private val prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
 
     companion object {
