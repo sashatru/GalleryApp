@@ -59,8 +59,8 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 
     // AdSDK
-    implementation(libs.adsdk)
-
+    //implementation(libs.adsdk)
+    implementation(project(":AdSDK"))
     // Koin for Dependency Injection
     implementation(libs.koin.android)
 }
