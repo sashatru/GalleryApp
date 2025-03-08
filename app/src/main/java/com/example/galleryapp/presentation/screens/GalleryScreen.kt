@@ -28,19 +28,12 @@ import com.google.android.gms.ads.nativead.NativeAdView
 
 @Composable
 fun GalleryScreen(mainViewModel: MainViewModel, modifier: Modifier = Modifier) {
-    val nativeAdState by mainViewModel.nativeAdState.collectAsState()
 
-    val imageList = listOf(
-        R.drawable.ab1_inversions,
-        R.drawable.ab2_quick_yoga,
-        R.drawable.ab3_stretching,
-        R.drawable.ab4_tabata,
-        R.drawable.ab5_hiit,
-        R.drawable.ab6_pre_natal_yoga
-    )
+    val nativeAdState by mainViewModel.nativeAdState.collectAsState()
+    val imageList by mainViewModel.imageList.collectAsState()
 
     LazyColumn(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .padding(16.dp)
     ) {
@@ -58,7 +51,7 @@ fun GalleryScreen(mainViewModel: MainViewModel, modifier: Modifier = Modifier) {
                                 val adView = inflater.inflate(
                                     R.layout.native_ad_layout,
                                     parent,
-                                    false // Важно! Это позволит сохранить параметры разметки
+                                    false
                                 )  as NativeAdView
                                 populateNativeAdView(state.nativeAd, adView)
                                 adView
