@@ -2,8 +2,8 @@ package com.example.galleryapp.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.adsdk.AdManager
-import com.example.adsdk.AdState
+import com.example.adsdk.data.sources.AdManager
+import com.example.adsdk.domain.models.AdState
 import com.example.galleryapp.utils.AppLaunchTracker
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

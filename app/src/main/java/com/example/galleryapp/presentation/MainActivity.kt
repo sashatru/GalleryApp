@@ -9,7 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.lifecycleScope
-import com.example.adsdk.AdManager
+import com.example.adsdk.data.sources.AdManager
 import com.example.galleryapp.domain.usecases.ShowInterstitialAdUseCase
 import com.example.galleryapp.ui.theme.GalleryAppTheme
 import kotlinx.coroutines.flow.collectLatest

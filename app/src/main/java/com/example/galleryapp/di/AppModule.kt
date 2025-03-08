@@ -1,6 +1,6 @@
 package com.example.galleryapp.di
 
-import com.example.adsdk.AdManager
+import com.example.adsdk.data.sources.AdManager
 import com.example.galleryapp.domain.usecases.ShowInterstitialAdUseCase
 import com.example.galleryapp.presentation.MainViewModel
 import com.example.galleryapp.utils.AppLaunchTracker
