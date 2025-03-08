@@ -1,4 +1,4 @@
-package com.example.galleryapp.presentation
+package com.example.galleryapp.presentation.screens
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,25 +6,29 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.example.adsdk.domain.models.AdState
 import com.example.galleryapp.R
+import com.example.galleryapp.presentation.MainViewModel
 import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdView
 
 @Composable
 fun GalleryScreen(mainViewModel: MainViewModel, modifier: Modifier = Modifier) {
     val nativeAdState by mainViewModel.nativeAdState.collectAsState()
-    val context = LocalContext.current
 
     val imageList = listOf(
         R.drawable.ab1_inversions,
@@ -50,12 +54,18 @@ fun GalleryScreen(mainViewModel: MainViewModel, modifier: Modifier = Modifier) {
                                 .height(120.dp),
                             factory = { ctx ->
                                 val inflater = LayoutInflater.from(ctx)
-                                val adView = inflater.inflate(R.layout.native_ad_layout, null) as NativeAdView
+                                val parent = androidx.constraintlayout.widget.ConstraintLayout(ctx)
+                                val adView = inflater.inflate(
+                                    R.layout.native_ad_layout,
+                                    parent,
+                                    false // Важно! Это позволит сохранить параметры разметки
+                                )  as NativeAdView
                                 populateNativeAdView(state.nativeAd, adView)
                                 adView
                             }
                         )
                     }
+
                     is AdState.Failed -> Text("Ad failed to load")
                     else -> Text("Loading ad...")
                 }

@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.lifecycleScope
 import com.example.adsdk.data.sources.AdManager
 import com.example.galleryapp.domain.usecases.ShowInterstitialAdUseCase
+import com.example.galleryapp.presentation.screens.GalleryScreen
 import com.example.galleryapp.ui.theme.GalleryAppTheme
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
