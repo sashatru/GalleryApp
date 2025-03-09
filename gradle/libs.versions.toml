@@ -1,5 +1,5 @@
 [versions]
-adsdk = "1.0.3"
+adsdk = "1.0.4"
 agp = "8.7.3"
 koinAndroid = "3.3.0"
 kotlin = "2.1.0"
@@ -35,5 +35,4 @@ mediation-test-suite = { group = "com.google.android.ads", name = "mediation-tes
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
-android-library = { id = "com.android.library"}
 
