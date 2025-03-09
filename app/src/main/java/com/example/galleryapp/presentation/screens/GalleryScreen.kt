@@ -138,7 +138,7 @@ fun AdLoadingCard() {
         ) {
             CircularProgressIndicator(
                 color = Color.Blue,
-                strokeWidth = 2.dp,
+                strokeWidth = 3.dp,
                 modifier = Modifier
                     .size(40.dp)
                     .padding(4.dp)
