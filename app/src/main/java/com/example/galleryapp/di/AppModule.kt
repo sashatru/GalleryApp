@@ -7,7 +7,9 @@ import com.example.galleryapp.domain.repository.GalleryRepository
 import com.example.galleryapp.domain.usecases.GetImagesUseCase
 import com.example.galleryapp.domain.usecases.ShowInterstitialAdUseCase
 import com.example.galleryapp.presentation.MainViewModel
+import com.example.galleryapp.utils.AdController
 import com.example.galleryapp.utils.AppLaunchTracker
+import com.example.galleryapp.utils.IAdController
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -15,9 +17,10 @@ import org.koin.dsl.module
 val appModule = module {
     single { AppLaunchTracker(androidContext()) }
     single { AdManager(androidContext()) }
+    single<IAdController> { AdController(get(), get()) }
     factory { ShowInterstitialAdUseCase(get()) }
     single<GalleryDataSource> { LocalGalleryDataSource() }
     single { GalleryRepository(get()) }
     single { GetImagesUseCase(get()) }
-    viewModel { MainViewModel(get(), get(), get()) }
+    viewModel { MainViewModel(get(), get()) }
 }

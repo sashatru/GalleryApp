@@ -51,15 +51,15 @@ fun GalleryScreen(mainViewModel: MainViewModel, modifier: Modifier = Modifier) {
             .padding(16.dp)
     ) {
         itemsIndexed(imageList) { index, imageRes ->
-            ImageWithAd(index = index, imageRes = imageRes, nativeAdState = nativeAdState)
+            ImageWithAd(index, imageRes, nativeAdState, mainViewModel)
         }
     }
 }
 
 @Composable
-fun ImageWithAd(index: Int, imageRes: Int, nativeAdState: AdState) {
+fun ImageWithAd(index: Int, imageRes: Int, nativeAdState: AdState, viewModel: MainViewModel) {
     Column(modifier = Modifier.fillMaxWidth()) {
-        if (index == 1 || index == 3) {
+        if (viewModel.shouldShowNativeAd(index)) {
             when (nativeAdState) {
                 is AdState.NativeAdLoaded -> {
                     Card(
@@ -82,7 +82,6 @@ fun ImageWithAd(index: Int, imageRes: Int, nativeAdState: AdState) {
                         )
                     }
                 }
-
                 is AdState.Failed -> AdErrorCard()
                 else -> AdLoadingCard()
             }
