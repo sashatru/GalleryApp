@@ -3,15 +3,16 @@ package com.example.galleryapp.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.adsdk.domain.models.AdState
-import com.example.galleryapp.domain.usecases.GetImagesUseCase
 import com.example.galleryapp.utils.IAdController
+import com.example.galleryapp.domain.models.ContentElement
+import com.example.galleryapp.domain.usecases.GetContentUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class MainViewModel(
     private val adController: IAdController,
-    private val getImagesUseCase: GetImagesUseCase
+    private val getContentUseCase: GetContentUseCase
 ) : ViewModel() {
 
     private val _shouldShowInterstitialAd = MutableStateFlow(false)
@@ -20,13 +21,19 @@ class MainViewModel(
     private val _nativeAdState = MutableStateFlow<AdState>(AdState.Loading)
     val nativeAdState: StateFlow<AdState> = _nativeAdState
 
-    private val _imageList = MutableStateFlow<List<Int>>(emptyList())
-    val imageList: StateFlow<List<Int>> = _imageList
+    private val _contentList = MutableStateFlow<List<ContentElement>>(emptyList())
+    val contentList: StateFlow<List<ContentElement>> = _contentList
 
     init {
+        configureAdPositions()
         checkInterstitialAdCondition()
         checkNativeAdConditions()
-        loadImages()
+        loadContent()
+    }
+
+    private fun configureAdPositions() {
+        val adPositions = listOf(1, 3) // Example positions
+        adController.setAdPositions(adPositions)
     }
 
     private fun checkInterstitialAdCondition() {
@@ -38,13 +45,12 @@ class MainViewModel(
     private fun checkNativeAdConditions() {
         if (adController.shouldShowNativeAd()) {
             observeNativeAdState()
-            configureAdPositions()
         }
     }
 
-    private fun loadImages() {
+    private fun loadContent() {
         viewModelScope.launch {
-            _imageList.value = getImagesUseCase()
+            _contentList.value = getContentUseCase()
         }
     }
 
@@ -54,15 +60,6 @@ class MainViewModel(
                 _nativeAdState.value = state
             }
         }
-    }
-
-    private fun configureAdPositions() {
-        val adPositions: List<Int> = listOf(1, 3) // Example positions
-        adController.setAdPositions(adPositions)
-    }
-
-    fun shouldShowNativeAd(index: Int): Boolean {
-        return adController.shouldShowNativeAd(index)
     }
 
     fun adShown() {

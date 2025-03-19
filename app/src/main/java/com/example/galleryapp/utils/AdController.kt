@@ -26,6 +26,10 @@ class AdController(
         adPositions = positions
     }
 
+    override fun getAdPositions(): List<Int> {
+        return adPositions
+    }
+
     override fun shouldShowNativeAd(index: Int): Boolean {
         return isNativeAdEnabled && adPositions.contains(index)
     }

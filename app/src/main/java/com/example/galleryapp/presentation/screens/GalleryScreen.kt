@@ -14,7 +14,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.example.adsdk.domain.models.AdState
 import com.example.galleryapp.R
+import com.example.galleryapp.domain.models.ContentElement
 import com.example.galleryapp.presentation.MainViewModel
 import com.example.galleryapp.ui.theme.GalleryAppTheme
 import com.google.android.gms.ads.nativead.NativeAd
@@ -43,23 +44,23 @@ import com.google.android.gms.ads.nativead.NativeAdView
 @Composable
 fun GalleryScreen(mainViewModel: MainViewModel, modifier: Modifier = Modifier) {
     val nativeAdState by mainViewModel.nativeAdState.collectAsState()
-    val imageList by mainViewModel.imageList.collectAsState()
+    val contentList by mainViewModel.contentList.collectAsState()
 
     LazyColumn(
         modifier = modifier
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        itemsIndexed(imageList) { index, imageRes ->
-            ImageWithAd(index, imageRes, nativeAdState, mainViewModel)
+        items(contentList) { content ->
+            ContentItem(content, nativeAdState)
         }
     }
 }
 
 @Composable
-fun ImageWithAd(index: Int, imageRes: Int, nativeAdState: AdState, viewModel: MainViewModel) {
+fun ContentItem(content: ContentElement, nativeAdState: AdState) {
     Column(modifier = Modifier.fillMaxWidth()) {
-        if (viewModel.shouldShowNativeAd(index)) {
+        if (content is ContentElement.AdContent || content.showAd) {
             when (nativeAdState) {
                 is AdState.NativeAdLoaded -> {
                     Card(
@@ -87,14 +88,34 @@ fun ImageWithAd(index: Int, imageRes: Int, nativeAdState: AdState, viewModel: Ma
             }
         }
 
-        Image(
-            painter = painterResource(id = imageRes),
-            contentDescription = "Gallery Image $index",
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(200.dp)
-                .padding(8.dp)
-        )
+        when (content) {
+            is ContentElement.ImageContent -> Image(
+                painter = painterResource(id = content.imageRes),
+                contentDescription = "Image Content",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(200.dp)
+                    .padding(8.dp)
+            )
+
+            is ContentElement.TextContent -> Text(
+                text = content.text,
+                fontSize = 16.sp,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp)
+            )
+
+            is ContentElement.VideoContent -> Text( // Video plug
+                text = "Video: ${content.videoUrl}",
+                fontSize = 16.sp,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp)
+            )
+
+            is ContentElement.AdContent -> {} // Уже обработано выше
+        }
     }
 }
 

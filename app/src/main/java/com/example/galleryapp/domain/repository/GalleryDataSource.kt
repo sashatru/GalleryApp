@@ -1,5 +1,7 @@
 package com.example.galleryapp.domain.repository
 
+import com.example.galleryapp.domain.models.ContentElement
+
 interface GalleryDataSource {
-    suspend fun getImageList(): List<Int>
+    suspend fun getContentList(): List<ContentElement>
 }
